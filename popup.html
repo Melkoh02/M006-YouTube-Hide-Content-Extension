@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>YT Cleaner</title>
+  <style>
+    :root {
+      font: 14px/1.35 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      margin: 12px;
+      min-width: 260px;
+      color: #111;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .row:last-child {
+      border-bottom: 0;
+    }
+
+    .label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .label small {
+      color: #666;
+    }
+
+    /* switch */
+    .switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #ddd;
+      transition: .2s;
+    }
+
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+      transition: .2s;
+    }
+
+    input:checked + .slider {
+      background: #0b84ff;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    footer {
+      margin-top: 10px;
+      color: #777;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+<div class="row">
+  <div class="label">
+    <strong>Hide Members-only</strong>
+    <small>Remove from channel Videos</small>
+  </div>
+  <label class="switch" title="Hide Members-only">
+    <input id="toggleMembers" type="checkbox">
+    <span class="slider"></span>
+  </label>
+</div>
+
+<div class="row">
+  <div class="label">
+    <strong>Hide Shorts</strong>
+    <small>On channel Videos tab</small>
+  </div>
+  <label class="switch" title="Hide Shorts">
+    <input id="toggleShorts" type="checkbox">
+    <span class="slider"></span>
+  </label>
+</div>
+
+<footer id="status"></footer>
+
+<script src="popup.js"></script>
+</body>
+</html>
