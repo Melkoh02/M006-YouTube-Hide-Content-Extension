@@ -32,28 +32,28 @@ const looksMembersOnly = el => {
   });
 };
 
-// Shorts heuristic: anchors to /shorts/ or explicit "SHORTS" overlay
+// TODO: refactor this
 const looksShorts = el => {
   const a = el.querySelector('a#thumbnail');
   if (a && /\/shorts\//.test(a.href)) return true;
   const overlay = el.querySelector('ytd-thumbnail-overlay-time-status-renderer, .badge-shorts');
-  if (overlay && /shorts/i.test(overlay.textContent || "")) return true;
-  return false;
+  return !!(overlay && /shorts/i.test(overlay.textContent || ""));
 };
 
 function hideStuff(root = document) {
   if (!PATH_IS_VIDEOS_TAB.test(location.pathname)) return;
 
   const itemSelectors = [
-    'ytd-rich-grid-media',
+    'ytd-rich-item-renderer',
     'ytd-grid-video-renderer',
     'ytd-compact-video-renderer'
   ];
+
   const items = root.querySelectorAll(itemSelectors.join(','));
 
   let hidden = 0;
+
   items.forEach(item => {
-    // Always re-evaluate, but avoid re-hiding with inline style stacking
     item.style.display = '';
     item.dataset._ytCleanerHidden = '';
 
@@ -71,7 +71,9 @@ function hideStuff(root = document) {
     }
   });
 
-  if (hidden) console.info(`[YT Cleaner] Hid ${hidden} item(s).`, state);
+  if (hidden) {
+    console.info(`[YT Cleaner] Hid ${hidden} item(s).`, state);
+  }
 }
 
 document.addEventListener('yt-navigate-finish', () => setTimeout(hideStuff, 0));
